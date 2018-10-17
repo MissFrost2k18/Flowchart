@@ -3,24 +3,42 @@
 #include <fstream>
 #include <string>
 
-std::string Rhombus(std::string s){
-	s = ("<html><svg><polygon points = \"0,70 100,140 200,70 100,0\" fill = \"pink\"/></svg></html>");
+std::string Rhombus(std::string s, int x, int y){
+	s+="<polygon points = \"";
+	s += std::to_string(x); 
+	s += ",";
+	s += std::to_string(y);
+	s += " ";
+	s +=std::to_string(x+100);
+	s += ",";
+	s += std ::to_string(y+70);
+	s += " "; 
+	s += std::to_string(x+200);
+	s += ",";
+	s += std::to_string(y);
+	s += " ";
+	s += std::to_string(x+100);
+	s += ",";
+	s += std::to_string(y-70);
+	s+= "\" fill = \"pink\"/>";
 	return s;
 }
 
 std::string Polygon(std::string s){
-	s = ("<html><svg width = \"200\" height = \"200\"> == $0 <polygon points = \"0,100 0,50 50,0 150,0 200,50 200,100 \" fill = \"pink\"></svg><svg width = \"1280\" height = \"600\"> == $0 <polygon points = \"0,150 0,200 50,250 150,250 200,200 200,150 \" fill = \"pink\"></svg></html>");
+	s = "<polygon points = \"0,100 0,50 50,0 150,0 200,50 200,100 \" fill = \"pink\"/>";
+	s+="\n";
+	s+="<polygon points = \"0,150 0,200 50,250 150,250 200,200 200,150 \" fill = \"pink\"/>";
 	return s;
 
 }
 
 std::string Parallelogramm(std::string s){
-	s = ("<html><svg width = \"1920\" height = \"1280\"> == $0 <polygon points = \"0,200 100,100 300,100 200,200\",fill = \"pink\"/></svg></html>");
+	s = "<polygon points = \"0,200 100,100 300,100 200,200\",fill = \"pink\"/>";
 	return s;
 }
 
 std::string Rectangle(std::string s){
-	s = "<html><svg width = \"1920\" height = \"1280\"> == $0><rect width=\"150\" height=\"100\" fill = \"pink\"/></svg></html>";
+	s = "<rect width=\"150\" height=\"100\" fill = \"pink\"/>";
 	return s;
 }
 
@@ -32,16 +50,19 @@ void ReadStr(char str){
 }
 
 int main(){
+	int x = 0, y = 150, z = 0,p = 300;
 	char str;
-        std::string s;
+        std::string s, a ,b;
         std::fstream f;
+	a = "<html><svg width = \"600\" height = \"600\"> ";
+	b = "</svg></html>";
 	while(str != '\n'){
 		std::cin >> str;
 		if(str == 'i'){
 			std::cin >> str;
 			if(str == 'f'){
 				f.open("rhombus.html", std::ios::out);
-				f << Rhombus(s) << std::endl;
+				f << a << "\n" << Rhombus(s, x , y) << "\n" << Rhombus(s, z, p) << "\n"<<  b << std::endl;
 				f.close();
 				system("firefox rhombus.html");
 				ReadStr(str);
@@ -49,7 +70,7 @@ int main(){
 			}
 			else{
 				f.open("rectangle.html", std::ios::out);
-				f << Rectangle(s) << std::endl;
+				f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
 				f.close();
 				system("firefox rectangle.html");
 				ReadStr(str);
@@ -63,7 +84,7 @@ int main(){
 					std::cin >> str;
 					if(str == 'r'){
 						f.open("polygon.html", std::ios::out);
-	                	                f << Polygon(s) << std::endl;
+	                	                f << a << "\n" << Polygon(s) << "\n" << b << std::endl;
         		                        f.close();
                                 		system("firefox polygon.html");
 		                                ReadStr(str);
@@ -71,7 +92,7 @@ int main(){
 					}
 					else{
 	        	                        f.open("rectangle.html", std::ios::out);
-        	        	                f << Rectangle(s) << std::endl;
+        	        	                f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
 	 	                                f.close();
 		                                system("firefox rectangle.html");
 		                                ReadStr(str);
@@ -87,7 +108,7 @@ int main(){
 								std::cin >> str;
 								if(str == 'e'){
 									f.open("polygon.html", std::ios::out);
-			                                                f << Polygon(s) << std::endl;
+			                                                f << a << "\n" << Polygon(s) << "\n" << b << std::endl;
                       				                        f.close();
 			                                                system("firefox polygon.html");
 	        		                                        ReadStr(str);
@@ -95,7 +116,7 @@ int main(){
 								}
 								else{
 			                                                f.open("rectangle.html", std::ios::out);
-                        			                        f << Rectangle(s) << std::endl;
+                        			                        f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
                                                 			f.close();
 			                                                system("firefox rectangle.html");
                         			                        ReadStr(str);
@@ -104,7 +125,7 @@ int main(){
 							}
 							else{
 		                                                f.open("rectangle.html", std::ios::out);
-                		                                f << Rectangle(s) << std::endl;
+                		                                f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
                                 		                f.close();
 		                                                system("firefox rectangle.html");
                 		                                ReadStr(str);
@@ -113,7 +134,7 @@ int main(){
 						}
 						else{
 	                                                f.open("rectangle.html", std::ios::out);
-        	                                        f << Rectangle(s) << std::endl;
+        	                                        f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
                 	                                f.close();
                         	                        system("firefox rectangle.html");
                                 	                ReadStr(str);
@@ -122,7 +143,7 @@ int main(){
 					}
 					else{
                                                 f.open("rectangle.html", std::ios::out);
-                                                f << Rectangle(s) << std::endl;
+                                                f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
                                                 f.close();
                                                 system("firefox rectangle.html");
                                                 ReadStr(str);
@@ -137,7 +158,7 @@ int main(){
 							std::cin >> str;
 							if(str == 'n'){
 								f.open("parallelogramm.html", std::ios::out);
-								f << Parallelogramm(s) << std::endl;
+								f << a << "\n" <<  Parallelogramm(s) << "\n" << b<< std::endl;
 								f.close();
 								system("firefox parallelogramm.html");
 								ReadStr(str);
@@ -149,7 +170,7 @@ int main(){
 									std::cin >> str;
 									if(str == 't'){
 										f.open("parallelogramm.html", std::ios::out);
-		                                                                f << Parallelogramm(s) << std::endl;
+		                                                                f  << a << "\n" <<  Parallelogramm(s) << "\n" << b<< std::endl;
                 		                                                f.close();
                                 		                                system("firefox parallelogramm.html");
                                                 		                ReadStr(str);
@@ -157,7 +178,7 @@ int main(){
 									}
 									else{
 			                                                        f.open("rectangle.html", std::ios::out);
-                        			                                f << Rectangle(s) << std::endl;
+                        			                                f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
                                                 			        f.close();
 			                                                        system("firefox rectangle.html");
                         			                                ReadStr(str);
@@ -166,7 +187,7 @@ int main(){
 								}
 								else{
 		                                                        f.open("rectangle.html", std::ios::out);
-                		                                        f << Rectangle(s) << std::endl;
+                		                                        f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
                                 		                        f.close();
                                                 		        system("firefox rectangle.html");
 		                                                        ReadStr(str);
@@ -176,7 +197,7 @@ int main(){
 						}
 						else{
                                                         f.open("rectangle.html", std::ios::out);
-                                                        f << Rectangle(s) << std::endl;
+                                                        f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
                                                         f.close();
                                                         system("firefox rectangle.html");
                                                         ReadStr(str);
@@ -185,7 +206,7 @@ int main(){
 					}
 					else{
                                                 f.open("rectangle.html", std::ios::out);
-                                                f << Rectangle(s) << std::endl;
+                                                f << a << "\n" << Rectangle(s) << "\n" << b << std::endl;
                                                 f.close();
                                                 system("firefox rectangle.html");
                                                 ReadStr(str);
