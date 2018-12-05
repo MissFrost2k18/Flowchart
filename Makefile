@@ -1,3 +1,3 @@
 all:
-	g++  FlowchartGraph.cpp -o Flowchart
+	g++  FlowchartGraphVer1.cpp -o Flowchart
 
