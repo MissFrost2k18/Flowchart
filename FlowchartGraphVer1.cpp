@@ -19,8 +19,8 @@ struct Graph{
 };
 
 std::string to_str(int param){
-	std::string s = " ";
-	for(s = " "; param; param /= 10)
+	std::string s = "";
+	for(s = ""; param; param /= 10)
 		s+= (char)('0'+param%10);
 	std::reverse(s.begin(), s.end());
 	return s;
