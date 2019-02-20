@@ -9,14 +9,20 @@ using std::cout;
 
 //логика
 
-struct Graph{
-	std::string inputOutput; //ввод, вывод
-	std::string loop; //цикл
-	std::string condition; //условие
-	std::string begEnd; //начало, конец
-	std::string expression; //выражение
-	Graph*next;
+enum NodeTypes{
+        inputOutput,//ввод вывод
+        condition,//условие
+        begend,//начало конец
+        loopUp,//цикл
+        loopDown,
+        expression//выражение
 };
+
+struct Node{
+        NodeTypes type;
+        Node*next;
+};
+
 
 std::string to_str(int param){
 	std::string s = "";
@@ -26,108 +32,71 @@ std::string to_str(int param){
 	return s;
 }
 
-Graph*add(Graph*g, std::string s, int num){ // добавление элемента в список
-	Graph*r = (Graph*)malloc(sizeof(Graph));
-	g->next = r;
-	if(num == 1){
-		r->inputOutput = s;
-		r->loop = "0";
-		r->condition = "0";
-		r->begEnd = "0";
-		r->expression = "0";
-	}
-	if(num == 2){
-		r->inputOutput = "0";
-		r->loop = s;
-		r->condition = "0";
-		r->begEnd = "0";
-		r->expression = "0";
-        }
-	if(num == 3){
-		r->inputOutput = "0";
-		r->loop = "0";
-		r->condition = s;
-		r->begEnd = "0";
-		r->expression = "0";
-	}
-	if(num == 4){
-		r->inputOutput = "0";
-		r->loop = "0";
-		r->condition = "0";
-		r->begEnd = s;
-		r->expression = "0";
-	}
-	if(num == 5){
-		r->inputOutput = "0";
-		r->loop = "0";
-		r->condition = "0";
-		r->begEnd = "0";
-		r->expression = s;
-	}
-	r->next = NULL;
-	return r;
+Node*add(Node*g, NodeTypes type){
+        Node*r = (Node*)malloc(sizeof(Node));
+        g->next = r;
+        r->type = type;
+        r->next = NULL;
+        return r;
 }
 
-void generateSearchMin(Graph*g){ // алгоритм поиска минимума в массиве
-	std::string s = "begin";
-	add(g, s, 4);
-	g = g->next;
-	s = "int a";
-	add(g, s, 5);
-	g = g->next;
-	s = "int n";
-	add(g, s, 5);
-	g = g->next;
-	s = "n";
-	add(g, s, 1);
-	g = g->next;
-	s = "int i = 0; i < n";
-	add(g, s, 2);
-	g = g->next;
-	s = "a[i]";
-	add(g, s, 1);
-	g = g->next;
-	s = "i++";
-	add(g, s, 2);
-	g = g->next;
-	s = "int min = a[0]";
-	add(g, s, 5);
-	g = g->next;
-	s = "int i = 0; i < n";
-	add(g, s, 2);
-	g = g->next;
-	s = "a[i] < min";
-	add(g, s, 3);
-	g = g->next;
-	s = "min = a[i]";
-	add(g, s, 5);
-	g = g->next;
-	s = "i++";
-	add(g, s, 2);
-	g = g->next;
-	s = "min";
-	add(g, s, 1);
-	g = g->next;
-	s = "end";
-	add(g, s, 4);
+void generateSearchMin(Node*r){ // алгоритм поиска минимума в массиве
+        std::string s = "begin";
+        add(r, begend);
+        r = r->next;
+        cout << "Min1" << std:: endl;
+        s = "int a";
+        add(r, expression);
+        r = r->next;
+        s = "int n";
+        cout << "Min2" << std::endl;
+        add(r,expression);
+        r = r->next;
+        cout << "Min3" << std::endl;
+        s = "n";
+        add(r, inputOutput);
+        r = r->next;
+        cout << " MIn4" << std::endl;
+        s = "int i = 0; i < n";
+        add(r, loopUp);
+        r = r->next;
+        cout << "Min5" << std::endl;
+        s = "a[i]";
+        add(r, inputOutput);
+        r = r->next;
+        cout << "Min6" << std::endl;
+        s = "i++";
+        add(r,loopDown);
+        r = r->next;
+        cout << "Min&" << std::endl;
+        s = "int min = a[0]";
+        add(r,expression);
+        r = r->next;
+        cout << "Min8" << std::endl;
+        s = "int i = 0; i < n";
+        add(r,loopUp);
+        r = r->next;
+        cout << "Min9" << std::endl;
+        s = "a[i] < min";
+        add(r,condition);
+	r = r->next;
+        cout << "MIn10" << std::endl;
+        s = "min = a[i]";
+        add(r,expression);
+        r = r->next;
+        cout << "Min11" << std::endl;
+        s = "i++";
+        add(r,loopDown);
+        r = r->next;
+        cout << "Min12" << std::endl;
+        s = "min";
+        add(r,inputOutput);
+        r = r->next;
+        cout << "Min13" << std::endl;
+        s = "end";
+        add(r,begend);
 }
 
-void print(Graph*g){ //вывод содержимого списка
-	g = g->next;
-	while(g != NULL){
-		if(g->inputOutput != "0")
-			cout << "Input or Output" << " " << g->inputOutput << std::endl;
-		if(g->loop != "0")
-			cout << "Loop " << g->loop << std::endl;
-		if(g->condition != "0")
-			cout << "Condition " << g->condition << std::endl;
-		if(g->begEnd != "0")
-			cout << g->begEnd << std::endl;
-		if(g->expression != "0")
-			cout << g->expression << std::endl;
-		g = g->next;
-        }
-}
 
 //рисование
 
@@ -272,7 +241,7 @@ std::string Line(std::string s, int x, int y){ // рисуем линию
 }
 
 std::string BegEnd(std::string s, int x, int y){
-	s = "<ellipse rx = \"200\" ry = \"100\" cx = \"";
+	s = "<ellipse rx = \"100\" ry = \"50\" cx = \"";
 	s += to_str(x);
 	s += "\" cy = \"";
 	s += to_str(y);
@@ -281,55 +250,56 @@ std::string BegEnd(std::string s, int x, int y){
 	return s;
 }
 
-int main(){
-
-	Graph*graph = (Graph*)malloc(sizeof(Graph));
-	generateSearchMin(graph);
-	print(graph);
-
-	std::string s, begin, end;
-	std::fstream f;
-	begin = "<html><svg width = \"";
-	begin += to_str(8000);
-	begin += "\" height = \"";
-	begin += to_str(8000) + "\"> ";
-	end = "</svg>";
-	end += "</html>";
-
-	f.open("graph.html", std::ios::out);
-	f << begin << std::endl;
-//	f << BegEnd(s, 100, 50) << std::endl;
-//	f << Line(s, 200, 50) << std::endl;
-	f << Rectangle(s, 100, 200) << std::endl; //int n
-	f << Line(s, 200, 200) << std::endl;
-	f << Parallelogramm(s, 50, 400) << std::endl;//cin >> n
-	f << Line(s, 200, 400) << std::endl;
-	f << Rectangle(s, 100, 600) << std::endl;// int*a;
-	f << Line(s, 200, 600) << std::endl;
-	f << PolygonUp(s, 100, 800) << std::endl;//for(int i = 0; i < n; i++)
-	f << Line(s, 200, 800) << std::endl;
-	f << Parallelogramm(s, 50, 1000) << std::endl; //cin >> a[i];
-	f << Line(s, 200, 1000) << std::endl;
-	f << PolygonDown(s, 100, 1100) << std::endl;
-	f << Line(s, 200, 1200) << std::endl;
-	f << Rectangle(s, 100, 1400) << std::endl; // int min = a[0];
-	f << Line(s, 200, 1400) << std::endl;
-	f << PolygonUp(s, 100, 1600) << std::endl; // for()
-	f << Line(s, 200, 1600) << std::endl;
-	f << Rhombus(s, 100, 1800) << std::endl; //a[i]<min
-	f << Line(s, 200, 1800) << std::endl;
-	f << Rectangle(s, 100, 2000) << std::endl; //min = a[i];
-	f << Line(s, 200, 2000) << std::endl;
-	f << PolygonDown(s, 100, 2100) << std::endl;
-	f << Line(s, 200, 2200) <<std::endl;
-	f << Parallelogramm(s, 50, 2400) << std::endl; // cout << min;
-	//f << Line(s, 200, 2400) << std::endl;
-	//f << BegEnd(s, 100, 2500) << std::endl;
-	f << end << std::endl;
-	f.close();
-	system("firefox graph.html");
-	return 0;
+std::string Draw(NodeTypes type, int x, int y, std::string s){
+        std::string output;
+        if(type == inputOutput){
+                output = Parallelogramm(s, x-150, y);
+        }
+        if(type == condition){
+                output = Rhombus(s, x-100, y);
+        }
+        if(type == begend){
+                output = BegEnd(s, x, y);
+        }
+        if(type == loopUp){
+                output = PolygonUp(s, x- 100, y);
+        }
+        if(type == loopDown){
+                output = PolygonDown(s, x - 100, y-100);
+        }
+        if(type == expression){
+                output = Rectangle(s, x - 100, y);
+        }
+        return output;
 }
+
+int main(){
+        Node*g = (Node*)malloc(sizeof(Node));
+        generateSearchMin(g);
+
+        std::string s, begin, end;
+        std::fstream f;
+        begin = "<html><svg width = \"";
+        begin += to_str(8000);
+        begin += "\" height = \"";
+        begin += to_str(8000) + "\"> ";
+        end = "</svg>";
+        end += "</html>";
+
+        f.open("graph.html", std::ios::out);
+        f << begin << std::endl;
+        int x = 200, y = 50;
+        while(g->next != NULL){
+                g = g->next;
+                f << Draw(g->type, x, y, s) << std::endl;
+                y += 300;
+        }
+	f << end << std::endl;
+        f.close();
+        system("firefox graph.html");
+        return 0;
+}
+
 
 
 
